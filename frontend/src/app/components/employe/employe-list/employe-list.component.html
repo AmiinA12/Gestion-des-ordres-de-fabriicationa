@@ -1,0 +1,32 @@
+<div class="container mt-4">
+  <h2>Liste des Employés</h2>
+  <a [routerLink]="['new']" class="btn btn-primary mb-3">Nouvel Employé</a>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Poste</th>
+        <th>Machine Assignée</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(employe of employes; track employe.id) {
+        <tr>
+          <td>{{ employe.nom }}</td>
+          <td>{{ employe.poste }}</td>
+          <td>{{ employe.machineNom || 'Non assignée' }}</td>
+          <td>
+            <button [routerLink]="['edit', employe.id]" class="btn btn-sm btn-info me-2">Éditer</button>
+            <button (click)="deleteEmploye(employe.id)" class="btn btn-sm btn-danger">Supprimer</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="4" class="text-center">Aucun employé trouvé</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

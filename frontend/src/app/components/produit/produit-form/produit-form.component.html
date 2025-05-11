@@ -1,0 +1,37 @@
+
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Modifier' : 'Créer' }} un Produit</h2>
+  
+  <form (ngSubmit)="onSubmit()" #produitForm="ngForm" class="mt-4">
+    <div class="mb-3">
+      <label for="nom" class="form-label">Nom</label>
+      <input type="text" class="form-control" id="nom" name="nom"
+             [(ngModel)]="produit.nom" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="type" class="form-label">Type</label>
+      <input type="text" class="form-control" id="type" name="type"
+             [(ngModel)]="produit.type" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="stock" class="form-label">Stock</label>
+      <input type="number" class="form-control" id="stock" name="stock"
+             [(ngModel)]="produit.stock" required min="0">
+    </div>
+
+    <div class="mb-3">
+      <label for="fournisseur" class="form-label">Fournisseur</label>
+      <input type="text" class="form-control" id="fournisseur" name="fournisseur"
+             [(ngModel)]="produit.fournisseur" required>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="!produitForm.form.valid">
+        {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>

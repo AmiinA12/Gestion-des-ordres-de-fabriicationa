@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <h2>Liste des Machines</h2>
+  <a [routerLink]="['new']" class="btn btn-primary mb-3">Nouvelle Machine</a>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>État</th>
+        <th>Dernière Maintenance</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(machine of machines; track machine.id) {
+        <tr>
+          <td>{{ machine.nom }}</td>
+          <td>
+            <span [class]="'badge ' + (machine.etat === 'En maintenance' ? 'bg-warning' : 
+                                     machine.etat === 'En panne' ? 'bg-danger' : 'bg-success')">
+              {{ machine.etat }}
+            </span>
+          </td>
+          <td>{{ machine.derniereMaintenance | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>
+            <button [routerLink]="['edit', machine.id]" class="btn btn-sm btn-info me-2">Éditer</button>
+            <button (click)="deleteMachine(machine.id!)" class="btn btn-sm btn-danger me-2">Supprimer</button>
+            <button (click)="planifierMaintenance(machine.id!)" class="btn btn-sm btn-warning">
+              Planifier Maintenance
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="4" class="text-center">Aucune machine trouvée</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h2>Liste des Ordres de Fabrication</h2>
+  <a [routerLink]="['new']" class="btn btn-primary mb-3">Nouvel Ordre</a>
+  
+  <app-error [message]="errorMessage"></app-error>
+  <app-loading-spinner [show]="isLoading" message="Chargement des ordres..."></app-loading-spinner>
+
+  <div class="table-responsive" *ngIf="!isLoading">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Projet</th>
+          <th>Produit</th>
+          <th>Quantité</th>
+          <th>Machine</th>
+          <th>Employé</th>
+          <th>Date</th>
+          <th>État</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(ordre of ordres; track ordre.id) {
+          <tr>
+            <td>{{ ordre.projet }}</td>
+            <td>{{ ordre.produitNom }}</td>
+            <td>{{ ordre.quantite }}</td>
+            <td>{{ ordre.machineNom }}</td>
+            <td>{{ ordre.employeNom || 'Non assigné' }}</td>
+            <td>{{ ordre.date | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <span [class]="'badge ' + (
+                ordre.etat === 'En cours' ? 'bg-primary' :
+                ordre.etat === 'Terminé' ? 'bg-success' :
+                ordre.etat === 'Annulé' ? 'bg-danger' : 'bg-warning'
+              )">
+                {{ ordre.etat }}
+              </span>
+            </td>
+            <td>
+              <button [routerLink]="['edit', ordre.id]" class="btn btn-sm btn-info me-2">Éditer</button>
+              <button (click)="deleteOrdre(ordre.id)" class="btn btn-sm btn-danger">Supprimer</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="text-center">Aucun ordre de fabrication trouvé</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

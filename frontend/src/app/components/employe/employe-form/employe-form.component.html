@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Modifier' : 'Créer' }} un Employé</h2>
+  
+  <form (ngSubmit)="onSubmit()" #employeForm="ngForm" class="mt-4">
+    <div class="mb-3">
+      <label for="nom" class="form-label">Nom</label>
+      <input type="text" class="form-control" id="nom" name="nom"
+             [(ngModel)]="employe.nom" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="poste" class="form-label">Poste</label>
+      <input type="text" class="form-control" id="poste" name="poste"
+             [(ngModel)]="employe.poste" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="machine" class="form-label">Machine Assignée</label>
+      <select class="form-select" id="machine" name="machine"
+              [(ngModel)]="employe.machineId">
+        <option [ngValue]="null">Aucune machine</option>
+        @for(machine of machines; track machine.id) {
+          <option [value]="machine.id">{{ machine.nom }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="!employeForm.form.valid">
+        {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>

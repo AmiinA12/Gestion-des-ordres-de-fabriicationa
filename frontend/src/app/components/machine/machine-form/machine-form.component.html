@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Modifier' : 'Créer' }} une Machine</h2>
+  
+  <form (ngSubmit)="onSubmit()" #machineForm="ngForm" class="mt-4">
+    <div class="mb-3">
+      <label for="nom" class="form-label">Nom</label>
+      <input type="text" class="form-control" id="nom" name="nom"
+             [(ngModel)]="machine.nom" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="etat" class="form-label">État</label>
+      <select class="form-select" id="etat" name="etat"
+              [(ngModel)]="machine.etat" required>
+        <option value="Disponible">Disponible</option>
+        <option value="En maintenance">En maintenance</option>
+        <option value="En panne">En panne</option>
+        <option value="En production">En production</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="derniereMaintenance" class="form-label">Dernière Maintenance</label>
+      <input type="datetime-local" class="form-control" id="derniereMaintenance" 
+             name="derniereMaintenance" [(ngModel)]="machine.derniereMaintenance">
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="!machineForm.form.valid">
+        {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>

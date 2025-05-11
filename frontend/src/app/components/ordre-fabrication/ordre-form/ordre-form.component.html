@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Modifier' : 'Créer' }} un Ordre de Fabrication</h2>
+  
+  <app-error [message]="errorMessage"></app-error>
+  <app-loading-spinner [show]="isLoading" [message]="loadingMessage"></app-loading-spinner>
+
+  <form (ngSubmit)="onSubmit()" #ordreForm="ngForm" class="mt-4" *ngIf="!isLoading">
+    <div class="mb-3">
+      <label for="projet" class="form-label">Projet</label>
+      <input type="text" class="form-control" id="projet" name="projet"
+             [(ngModel)]="ordre.projet" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="produit" class="form-label">Produit</label>
+      <select class="form-select" id="produit" name="produit"
+              [(ngModel)]="ordre.produitId" required>
+        <option value="">Sélectionnez un produit</option>
+        @for(produit of produits; track produit.id) {
+          <option [value]="produit.id">{{ produit.nom }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="machine" class="form-label">Machine</label>
+      <select class="form-select" id="machine" name="machine"
+              [(ngModel)]="ordre.machineId" required>
+        <option value="">Sélectionnez une machine</option>
+        @for(machine of machines; track machine.id) {
+          <option [value]="machine.id">{{ machine.nom }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="employe" class="form-label">Employé</label>
+      <select class="form-select" id="employe" name="employe"
+              [(ngModel)]="ordre.employeId">
+        <option value="">Sélectionnez un employé</option>
+        @for(employe of employes; track employe.id) {
+          <option [value]="employe.id">{{ employe.nom }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="quantite" class="form-label">Quantité</label>
+      <input type="number" class="form-control" id="quantite" name="quantite"
+             [(ngModel)]="ordre.quantite" required min="1">
+    </div>
+
+    <div class="mb-3">
+      <label for="date" class="form-label">Date</label>
+      <input type="date" class="form-control" id="date" name="date"
+             [(ngModel)]="ordre.date" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="etat" class="form-label">État</label>
+      <select class="form-select" id="etat" name="etat"
+              [(ngModel)]="ordre.etat" required>
+        <option value="En attente">En attente</option>
+        <option value="En cours">En cours</option>
+        <option value="Terminé">Terminé</option>
+        <option value="Annulé">Annulé</option>
+      </select>
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary me-2" 
+              [disabled]="!ordreForm.form.valid || isSubmitting">
+        {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+      </button>
+      <button type="button" class="btn btn-secondary" 
+              [disabled]="isSubmitting"
+              (click)="onCancel()">
+        Annuler
+      </button>
+    </div>
+  </form>
+</div>
